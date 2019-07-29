@@ -17,7 +17,7 @@ client.on("ready", async message => {
 	console.log(t);
 	client.user.setActivity("Browsing Art"); 
 	setInterval(function() {
-		grafica();
+		testGrafica();
 	}, 60 * 1000 * 60 * 24);
 });
 
@@ -28,13 +28,17 @@ client.on("message", async message => {
 	const command = args.shift().toLowerCase();
 
 	if (command === "image") {
+		!testGrafica();
+    }
+	if (command === "test") {
 		!grafica();
 		grafica = 0;
     }
 });
-//original command with no file logging
-/*function grafica(){
-	client.channels.get('584079072716521472').bulkDelete(100)
+
+//does not log values recorded
+function grafica(){
+	client.channels.get('584079072716521472').bulkDelete(300)
 		 .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
 
     client.channels.get('584079072716521472').send('Daily Grafica', {
@@ -42,22 +46,22 @@ client.on("message", async message => {
             "./Grafica/"+Math.floor((Math.random() * 197)+1)+".png"
         ]
     });
-}*/
+}
 
-//logs grafica values to avoid repeats
-function grafica(){
+//logs values recorded
+function testGrafica(){
 	client.channels.get('584079072716521472').bulkDelete(300)
 		 .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
+	
 	grafica = Math.floor((Math.random() * 197)+1);
 	!getValue(grafica);
-	client.channels.get('5840790727165214720').send('Daily Grafica', {
+	client.channels.get('584079072716521472').send('Daily Grafica', {
 		files: [
 			"./Grafica/"+grafica+".png"
 		]
 	});
 }
 
-//probably a shit way of reading/writing/randomizing but fuck ittttttt
 function getValue(){
 	fs = require('fs')
 	var values = fs.readFileSync("./grafica.txt").toString('utf-8');
