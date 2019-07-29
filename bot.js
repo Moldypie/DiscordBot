@@ -38,10 +38,7 @@ client.on("message", async message => {
 
 //does not log values recorded
 function grafica(){
-	client.channels.get('584079072716521472').bulkDelete(300)
-		 .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
-
-    client.channels.get('584079072716521472').send('Daily Grafica', {
+    client.channels.get('584066110194843650').send('Daily Grafica', {
         files: [
             "./Grafica/"+Math.floor((Math.random() * 197)+1)+".png"
         ]
