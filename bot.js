@@ -17,7 +17,7 @@ client.on("ready", async message => {
 	console.log(t);
 	client.user.setActivity("Browsing Art"); 
 	setInterval(function() {
-		testGrafica();
+		loggedGrafica();
 	}, 60 * 1000 * 60 * 24);
 });
 
@@ -28,16 +28,16 @@ client.on("message", async message => {
 	const command = args.shift().toLowerCase();
 
 	if (command === "image") {
-		!testGrafica();
+		!loggedGrafica();
     }
 	if (command === "test") {
-		!grafica();
+		!unloggedGrafica();
 		grafica = 0;
     }
 });
 
 //does not log values recorded
-function grafica(){
+function unloggedGrafica(){
     client.channels.get('584066110194843650').send('Daily Grafica', {
         files: [
             "./Grafica/"+Math.floor((Math.random() * 197)+1)+".png"
@@ -46,7 +46,7 @@ function grafica(){
 }
 
 //logs values recorded
-function testGrafica(){
+function loggedGrafica(){
 	client.channels.get('584079072716521472').bulkDelete(300)
 		 .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
 	
